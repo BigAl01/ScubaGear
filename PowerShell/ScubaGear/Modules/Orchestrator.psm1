@@ -54,7 +54,7 @@ function Invoke-SCuBA {
 
             # Create a folder to dump everything into
             $Date = Get-Date
-            $DateStr = $Date.ToString("yyyy_MM_dd_HH_mm_ss")
+            $DateStr = $Date.ToString("yyyy_MM_dd")
 
             $FormattedTimeStamp = $DateStr
 
@@ -185,18 +185,11 @@ function Invoke-ProviderList {
         }
 
         $ProviderJSON = $ProviderJSON.TrimEnd(",")
-        $TimeZone = ""
-        if ((Get-Date).IsDaylightSavingTime()) {
-            $TimeZone = (Get-TimeZone).DaylightName
-        }
-        else {
-            $TimeZone = (Get-TimeZone).StandardName
-        }
         $BaselineSettingsExport = @"
 {
         "baseline_version": "0.1",
         "module_version": "$ModuleVersion",
-        "date": "$(Get-Date) $($TimeZone)",
+        "date": "$(Get-Date)",
         "tenant_details": $($TenantDetails),
 
         $ProviderJSON
