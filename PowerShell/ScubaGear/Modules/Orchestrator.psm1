@@ -53,13 +53,17 @@ function Invoke-SCuBA {
             }
 
             # Create a folder to dump everything into
-            $Date = Get-Date
-            $DateStr = $Date.ToString("yyyy_MM_dd")
+            #$Date = Get-Date
+            #$DateStr = $Date.ToString("yyyy_MM_dd")
 
-            $FormattedTimeStamp = $DateStr
+            #$FormattedTimeStamp = $DateStr
+
+            $TenantDetails = Get-TenantDetails -ProductNames $ProductNames
+            $DisplayName = $TenantDetails | ConvertFrom-Json
+            $DisplayName = $DisplayName.DisplayName
 
             $OutFolderPath = $OutPath
-            $FolderName = "M365BaselineConformance_$($FormattedTimeStamp)"
+            $FolderName = $DisplayName
             New-Item -Path $OutFolderPath -Name $($FolderName) -ItemType Directory | Out-Null
             $OutFolderPath = Join-Path -Path $OutFolderPath -ChildPath $FolderName
 
